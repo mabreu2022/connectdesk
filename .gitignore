@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Build / pkg output
+client/dist/
+*.exe
+*.pkg
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Scratch / temp
+scratch/
+
+# IDE / editor
+.vscode/
+.idea/
+
+# Environment / secrets
+.env
