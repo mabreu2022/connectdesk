@@ -180,6 +180,30 @@ O Connect Desk foi desenvolvido sob os mais rígidos padrões de design moderno 
 
 ---
 
+## 💖 Contribuição e Doações
+
+Se este projeto foi útil para você ou se você deseja apoiar o desenvolvimento contínuo do **Connect Desk**, sinta-se à vontade para fazer uma doação de qualquer valor! 
+
+Toda contribuição é extremamente bem-vinda e nos ajuda a manter o projeto ativo, aprimorando funcionalidades e trazendo novas atualizações.
+
+<p align="center">
+  <img src="assets/donation-qrcode.png" alt="QR Code para Doação" width="300" />
+  <br>
+  <strong>Escaneie o QR Code acima para doar qualquer valor via Pix 🚀</strong>
+</p>
+
+---
+
+## 💬 Suporte e Comunidade
+
+Para esclarecer dúvidas, reportar problemas ou interagir com outros desenvolvedores e usuários do **Connect Desk**, participe do nosso grupo oficial no WhatsApp:
+
+👉 [**Acessar Grupo de Suporte no WhatsApp**](https://chat.whatsapp.com/FTE2GEq7m4BAKaR42wttSi)
+
+---
+
 ## 📄 Licença
 
 Este projeto é desenvolvido para fins educacionais e de demonstração de conceito (PoC). Sinta-se livre para customizar, expandir e integrar em suas próprias soluções de suporte de TI!
+
+
