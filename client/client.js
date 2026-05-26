@@ -275,7 +275,7 @@ rl.on('SIGINT', () => {
 
 console.clear();
 console.log('==================================================');
-console.log('       ANYDESK REMOTE CONTROL CLIENT (PoC)        ');
+console.log('      CONNECT DESK REMOTE CONTROL CLIENT (PoC)    ');
 console.log('==================================================');
 console.log(`  Endereço Remoto:      \x1b[36m${formattedId}\x1b[0m`);
 console.log(`  Senha Temporária:     \x1b[33m${tempPassword}\x1b[0m`);

@@ -1,11 +1,11 @@
 {
-  "name": "client",
+  "name": "connect-desk-client",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "pkg . --targets node18-win-x64 --output dist/client_v3.exe"
+    "build": "pkg . --targets node18-win-x64 --output dist/connectdesk.exe"
   },
   "keywords": [],
   "author": "",
