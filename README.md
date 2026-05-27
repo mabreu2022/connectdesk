@@ -208,4 +208,218 @@ Para esclarecer dúvidas, reportar problemas ou interagir com outros desenvolved
 
 Este projeto é desenvolvido para fins educacionais e de demonstração de conceito (PoC). Sinta-se livre para customizar, expandir e integrar em suas próprias soluções de suporte de TI!
 
+---
 
+<br>
+
+---
+
+# Connect Desk 🖥️✨ — English Version
+
+> 🌐 **Language / Idioma:** [🇧🇷 Português](#connect-desk-%EF%B8%8F) | [🇺🇸 English](#connect-desk-%EF%B8%8F-english-version)
+
+**Connect Desk** is a high-performance remote support and control software built on modern web technologies and native Windows APIs. It allows you to view and control computers remotely in real time, directly from your browser — no heavy client installation required on the viewer's side.
+
+With a cutting-edge premium design — featuring dark mode, glassmorphism, and fluid effects — Connect Desk combines ease of use with excellent performance.
+
+---
+
+## 🚀 Key Features
+
+- **Ultra-Fast Screen Capture:** Native capture engine written in C# and executed dynamically via PowerShell in the background (GDI+), ensuring high frame rates and excellent sharpness for text readability.
+- **Full Interactive Control:**
+  - **Mouse:** Movement, clicks (left and right), and scroll wheel.
+  - **Keyboard:** Text input and special keys (Enter, Backspace, Tab, Arrow keys, Delete, etc.).
+- **Responsive Web Control Panel:** An amazing web interface using modern fonts (Outfit and Inter) with dynamic zoom/scale control ("Fit to Screen" or "1:1 Real Size").
+- **Secure Session Connectivity:** Each target machine receives a unique 9-digit formatted address and a random 4-digit temporary password generated at every client startup.
+- **Built-in Coordinator Web Server:** The client itself can initialize a local web panel on port `4500` when on a local network, enabling direct control.
+- **Standalone Packaging:** The client can be compiled into a single click-to-run `.exe` executable using the `pkg` tool.
+- **Smart Solution for Windows VPS:** Native instructions and alerts integrated to avoid the black screen/screen freeze commonly encountered when minimizing or disconnecting RDP sessions on virtual servers.
+
+---
+
+## 🛠️ Project Architecture
+
+The project is divided into two main parts:
+
+1. **`server/` (Coordinator Server):**
+   - Built with **Node.js**, **Express**, and **Socket.io**.
+   - Acts as a lightweight, low-latency intermediary that only forwards mouse/keyboard commands from viewers to the target machine, and redistributes video frames from the target machine to viewers.
+
+2. **`client/` (Host Client / Target Machine):**
+   - A **Node.js** application that starts a persistent and optimized PowerShell process.
+   - The PowerShell script dynamically loads native C# code to interact directly with Windows APIs (GDI+, `user32.dll` for mouse and keyboard input).
+   - Sends screen frames as compressed JPEG in high-fidelity quality via WebSocket connections (Socket.io).
+
+---
+
+## 📋 Prerequisites
+
+* **Coordinator Server:** Any operating system (Windows, Linux, macOS) with **Node.js v16+** installed.
+* **Client (Machine to be controlled):** **Windows** OS (due to native Win32 and GDI+ API usage) with **Node.js v16+** installed.
+* **Viewer:** Any modern device with an up-to-date web browser (Chrome, Edge, Firefox, Safari).
+
+---
+
+## ⚙️ Installation and Setup
+
+### Step 1: Install Dependencies
+
+First, download or extract the project. In a terminal at the root directory, install the general project and server dependencies:
+
+```bash
+npm install
+```
+
+Then, navigate to the `client/` folder and install the remote client's specific dependencies:
+
+```bash
+cd client
+npm install
+cd ..
+```
+
+---
+
+### Step 2: Start the Coordinator Server
+
+Start the connection server so machines can register and communicate. By default, it will listen on port `4500`:
+
+```bash
+node server/server.js
+```
+
+You will see the following output in the terminal:
+> `Server (Controller) running at http://localhost:4500`
+
+*Note: If you are deploying the server on a VPS or cloud environment, make sure to expose port `4500` (or the port configured in the `PORT` environment variable) in your firewall.*
+
+---
+
+### Step 3: Configure and Start the Client
+
+On the computer you want to control:
+
+1. Check the settings in the `client/config.json` file:
+   ```json
+   {
+     "id": "411988342",
+     "serverUrl": "http://localhost:4500"
+   }
+   ```
+   *Replace `http://localhost:4500` with the public IP or domain of your coordinator server if it is not running locally.*
+
+2. Start the client:
+   ```bash
+   node client/client.js
+   ```
+
+3. The client console will clear the screen and display the formatted secure connection credentials:
+
+   ```text
+   ==================================================
+         CONNECT DESK REMOTE CONTROL CLIENT (PoC)    
+   ==================================================
+     Remote Address:       123 456 789
+     Temporary Password:   4321
+   ==================================================
+     Connecting to Coordinator: http://localhost:4500
+   ==================================================
+     ► IF YOU DETECT BLACK SCREEN ON WINDOWS VPS:
+       If your RDP session drops or is closed, the GUI freezes.
+       To disconnect while keeping the screen active, run in cmd:
+       tscon 1 /dest:console (replace 1 with your session ID)
+   ==================================================
+     ► TO CONTROL ANOTHER COMPUTER:
+       Press [Enter] to open the Control Panel
+   ==================================================
+   ```
+
+---
+
+### Step 4: Performing Remote Control
+
+1. On the support computer (Viewer), open your browser and go to the coordinator server address (e.g., `http://localhost:4500` or the public IP/domain of your VPS).
+2. On the stunning **Connect Desk** home screen, enter the 9-digit **Remote Address** displayed in the client console.
+3. Click **Start Connection**.
+4. A stylized pop-up window will prompt for the password. Enter the 4-digit **Temporary Password** generated in the target machine's console and click **Confirm**.
+5. **Done!** The remote machine's screen will render in an ultra-smooth flow. Use your mouse and keyboard to operate it as if you were sitting right in front of it.
+
+---
+
+## 📦 Compiling to a Standalone Executable (`.exe`)
+
+To make it easier for end clients or support users, you can compile the `client` module into a single executable file for Windows. This eliminates the need to install Node.js on the machine to be controlled!
+
+To do this:
+1. Open a terminal in the `client/` folder:
+   ```bash
+   cd client
+   ```
+2. Run the build command:
+   ```bash
+   npm run build
+   ```
+3. The `pkg` tool will package all scripts, node_modules dependencies, and static files from the `public` folder into the executable.
+4. The generated file will be available at `client/dist/connectdesk.exe`.
+
+You can now send this file directly to the user. They only need to double-click the executable to generate instant support credentials!
+
+---
+
+## 💡 Special Tip for Windows VPS (Inactive GUI / Black Screen)
+
+When using remote control on Windows VPS instances (such as those hosted on AWS, Azure, Google Cloud, or local providers), it is common to encounter a black screen if you close or minimize the standard Windows Remote Desktop Connection (RDP) window. This happens because Windows disables the active screen GUI renderer to save resources when no RDP user is active.
+
+To fix this and keep the screen active so **Connect Desk** continues working perfectly, follow these steps before closing your RDP session:
+
+1. Open **Command Prompt (CMD)** as **Administrator** on your VPS.
+2. Run the following command to get your active RDP session ID:
+   ```cmd
+   query session
+   ```
+3. You will see a list. Look for the line with your username (usually `Administrator`) under the active session named `rdp-tcp#...` and note the number in the **ID** column (usually `1` or `2`).
+4. Run the following command, replacing `SESSION_ID` with the noted number:
+   ```cmd
+   tscon SESSION_ID /dest:console
+   ```
+   *Example:* `tscon 1 /dest:console`
+5. Your standard RDP window will close immediately. However, Windows will transfer the active graphical interface directly to the local console, keeping the GUI running.
+6. Now, **Connect Desk** can transmit the screen and accept mouse and keyboard commands without any freezing or black screen!
+
+---
+
+## 🎨 Premium Design and Customization
+
+Connect Desk was developed under the strictest modern design standards to provide the best user experience:
+- **Fluid Typography:** Uses the Outfit and Inter fonts via Google Fonts.
+- **Premium Glass Appearance:** Background blur effects (*backdrop-filter*) and elegant gradients that respond to interactions.
+- **Dynamic Responsiveness:** The viewer is compatible with ultrawide monitors as well as laptops and smaller screens, thanks to intelligent automatic canvas scaling and resizing.
+
+---
+
+## 💖 Contributing and Donations
+
+If this project has been useful to you or if you would like to support the continued development of **Connect Desk**, feel free to make a donation of any amount!
+
+Every contribution is extremely welcome and helps us keep the project active, improving features and bringing new updates.
+
+<p align="center">
+  <img src="assets/donation-qrcode.png" alt="Donation QR Code" width="300" />
+  <br>
+  <strong>Scan the QR Code above to donate any amount via Pix 🚀</strong>
+</p>
+
+---
+
+## 💬 Support and Community
+
+To get help, report issues, or interact with other **Connect Desk** developers and users, join our official WhatsApp group:
+
+👉 [**Join the Support Group on WhatsApp**](https://chat.whatsapp.com/FTE2GEq7m4BAKaR42wttSi)
+
+---
+
+## 📄 License
+
+This project is developed for educational and proof-of-concept (PoC) purposes. Feel free to customize, expand, and integrate it into your own IT support solutions!
