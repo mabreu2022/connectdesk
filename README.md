@@ -1,5 +1,7 @@
 # Connect Desk 🖥️✨
 
+> 🌐 **Language / Idioma:** [🇧🇷 Português](#connect-desk-%EF%B8%8F-1) | [🇺🇸 English](#connect-desk-%EF%B8%8F-english-version)
+
 O **Connect Desk** é um software de suporte e controle remoto de alto desempenho baseado em tecnologias modernas de web e APIs nativas do Windows. Ele permite que você visualize e controle computadores remotamente em tempo real diretamente pelo seu navegador, sem a necessidade de instalar clientes pesados no lado do visualizador.
 
 Com um design premium de última geração — utilizando dark mode, glassmorphism e efeitos fluidos —, o Connect Desk combina facilidade de uso com excelente performance.
