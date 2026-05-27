@@ -410,6 +410,8 @@ Every contribution is extremely welcome and helps us keep the project active, im
   <strong>Scan the QR Code above to donate any amount via Pix 🚀</strong>
 </p>
 
+paypal for donations https://www.paypal.com/invoice/p/#WQJU2VBBSCU7QP6H
+
 ---
 
 ## 💬 Support and Community
